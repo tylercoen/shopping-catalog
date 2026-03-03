@@ -87,4 +87,23 @@ public class User implements Serializable {
 		return (email == null) ? 0 : email.hashCode();
 	}
 
+	public static void main(String[] args) {
+		System.out.println("=== USER TEST ===");
+
+		User user1 = new User("John", "Doe", "test@email.com", "pass123");
+		User user2 = new User("Jane", "Smith", "test@email.com", "differentPass");
+		User user3 = new User("John", "Doe", "other@email.com", "pass123");
+
+		// equals() test
+		System.out.println("user1 equals user2 (same email): " + user1.equals(user2));
+		System.out.println("user1 equals user3 (different email: " + user1.equals(user3));
+
+		// hashCode() test
+		System.out.println("user1 hashCode: " + user1.hashCode());
+		System.out.println("email hashCode: " + user1.getEmail().hashCode());
+
+		System.out.println("hashCode match: " + (user1.hashCode() == user1.getEmail().hashCode()));
+
+	}
+
 }
