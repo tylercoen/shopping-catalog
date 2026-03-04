@@ -63,4 +63,15 @@ public class UserManager {
 		return users.size();
 	}
 
+	public static void main(String[] args) {
+		UserManager manager = new UserManager();
+
+		User validUser = new User("Iyo", "Sky", "iyo@wwe.com", "pass123");
+
+		manager.registerUser(validUser);
+		System.out.println("User registered successfully");
+
+		// try duplicate
+		manager.registerUser(validUser); // should throw IllegalStateException
+	}
 }
