@@ -1,0 +1,117 @@
+package model;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+public class DatabaseManager {
+	// Replace below paths with your full path to users.txt and carts.txt in the
+	// project database folder.
+	private final String USERS_PATH = "\"C:\\Users\\tyler\\eclipse-workspace\\shopping-catalog\\WebContent\\WEB-INF\\database\\users.txt\"";
+	private final String CARTS_PATH = "\"C:\\Users\\tyler\\eclipse-workspace\\shopping-catalog\\WebContent\\WEB-INF\\database\\carts.txt\"";
+
+	public Map<String, User> getUsers() {
+		try {
+			File usersDb = new File(this.USERS_PATH);
+
+			if (usersDb.isFile() && usersDb.length() != 0L) {
+				FileInputStream fis = new FileInputStream(usersDb);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				Map<String, User> users = (Map<String, User>) ois.readObject();
+				ois.close();
+				return users;
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("FAILED TO FIND SAVED DATA.");
+		} catch (IOException e) {
+			System.out.println("FAILED TO SAVE DATA.");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED ERROR OCCURED.");
+		}
+		return new HashMap<>();
+	}
+
+	public Map<String, Map<CartItem, Integer>> getUserCarts() {
+		try {
+			File cartsDb = new File(this.CARTS_PATH);
+
+			if (cartsDb.isFile() && cartsDb.length() != 0L) {
+				FileInputStream fis = new FileInputStream(cartsDb);
+				ObjectInputStream ois = new ObjectInputStream(fis);
+				Map<String, Map<CartItem, Integer>> userCarts = (Map<String, Map<CartItem, Integer>>) ois.readObject();
+				ois.close();
+				return userCarts;
+			}
+		} catch (FileNotFoundException e) {
+			System.out.println("FAILED TO FIND SAVED DATA.");
+		} catch (IOException e) {
+			System.out.println("FAILED TO SAVE DATA.");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED ERROR OCCURED.");
+		}
+		return new HashMap<>();
+	}
+
+	public void writeUsers(List<User> list) {
+		try {
+			File usersDb = new File(this.USERS_PATH);
+
+			if (usersDb.isFile() && usersDb.length() != 0L) {
+				usersDb.delete();
+				usersDb.createNewFile();
+			}
+
+			FileOutputStream fos = new FileOutputStream(usersDb);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(list);
+
+			oos.flush();
+			oos.close();
+		} catch (IOException e) {
+			System.out.println("ERROR SAVING DATA");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED ERROR OCCURED.");
+		}
+	}
+
+	public void writeUserCarts(Map<String, Map<CartItem, Integer>> userCarts) {
+		try {
+			File cartsDb = new File(this.CARTS_PATH);
+
+			if (cartsDb.isFile() && cartsDb.length() != 0L) {
+				cartsDb.delete();
+				cartsDb.createNewFile();
+			}
+
+			FileOutputStream fos = new FileOutputStream(cartsDb);
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			oos.writeObject(userCarts);
+
+			oos.flush();
+			oos.close();
+		} catch (IOException e) {
+			System.out.println("ERROR SAVING DATA");
+		} catch (Exception e) {
+			System.out.println("UNEXPECTED ERROR OCCURED.");
+		}
+	}
+
+	public static void main(String[] args) {
+		DatabaseManager db = new DatabaseManager();
+		System.out.println("User file path: " + db.USERS_PATH);
+		System.out.println("Carts file path: " + db.CARTS_PATH);
+
+		File usersFile = new File(db.USERS_PATH);
+		File cartsFile = new File(db.CARTS_PATH);
+
+		System.out.println("Users file exists: " + usersFile.exists());
+		System.out.println("Carts file exists: " + cartsFile.exists());
+	}
+}
