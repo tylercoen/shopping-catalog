@@ -63,6 +63,16 @@ public class UserManager {
 		return users.size();
 	}
 
+	// default constructor
+	public UserManager() {
+		this.users = new HashMap<>();
+	}
+
+	// constructor used when loading from database
+	public UserManager(Map<String, User> users) {
+		this.users = users;
+	}
+
 	public static void main(String[] args) {
 		UserManager manager = new UserManager();
 
