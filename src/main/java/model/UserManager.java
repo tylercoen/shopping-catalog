@@ -48,6 +48,31 @@ public class UserManager {
 		return user.getPassword().equals(password);
 	}
 
+	// login user
+	public User loginUser(User userToLogin) {
+		if (userToLogin == null) {
+			throw new IllegalArgumentException("User cannot be null");
+		}
+
+		String email = userToLogin.getEmail();
+		String password = userToLogin.getPassword();
+
+		if (email == null || password == null || email.isEmpty() || password.isEmpty()) {
+			throw new IllegalArgumentException("Email and password must be provided");
+		}
+
+		User storedUser = users.get(email);
+		if (storedUser == null) {
+			throw new IllegalArgumentException("User does not exist");
+		}
+
+		if (!storedUser.getPassword().equals(password)) {
+			throw new IllegalStateException("Incorrect password");
+		}
+
+		return storedUser;
+	}
+
 	// retrieve all users
 	public List<User> getUsers() {
 		return new ArrayList<>(users.values());
