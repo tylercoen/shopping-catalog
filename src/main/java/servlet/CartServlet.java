@@ -48,10 +48,7 @@ public class CartServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Checking cart session...");
 		HttpSession session = request.getSession(false);
-		System.out.println("Session: " + session);
-		System.out.println("Email attribute: " + session.getAttribute("email"));
 
 		if (session == null) {
 			response.sendRedirect("/shopping-catalog/login.html");
@@ -82,5 +79,39 @@ public class CartServlet extends HttpServlet {
 			out.println(html);
 		}
 
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+
+		if (session == null) {
+			response.sendRedirect("/shopping-catalog/login.html");
+			return;
+		}
+
+		String email = (String) session.getAttribute("email");
+
+		if (email == null) {
+			session.invalidate();
+			response.sendRedirect("/shopping-catalog/login.html");
+			return;
+		}
+		// retrieve parameters
+		String imgAddress = request.getParameter("imgAddresss");
+		String itemName = request.getParameter("itemName");
+		String itemPriceStr = request.getParameter("itemPrice");
+
+		double itemPrice = Double.parseDouble(itemPriceStr);
+
+		// create cart item
+		CartItem cartItem = new CartItem(itemName, itemPrice, imgAddress);
+
+		// add item to cart
+		cartManager.addToCart(email, cartItem);
+
+		// redirect back to catalog
+		response.sendRedirect("/shopping-catalog/catalog.html");
 	}
 }

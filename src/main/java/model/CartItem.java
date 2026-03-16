@@ -9,7 +9,7 @@ public class CartItem implements Serializable {
 
 	private String imgAddress;
 	private String name;
-	private int price;
+	private double price;
 
 	public String getImgAddress() {
 		return imgAddress;
@@ -27,7 +27,7 @@ public class CartItem implements Serializable {
 		this.name = name;
 	}
 
-	public int getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
@@ -40,7 +40,7 @@ public class CartItem implements Serializable {
 	};
 
 	// parameterized constructor
-	public CartItem(String name, int price, String imgAddress) {
+	public CartItem(String name, double price, String imgAddress) {
 		this.name = name;
 		this.price = price;
 		this.imgAddress = imgAddress;
