@@ -75,7 +75,7 @@ public class AccessServlet extends HttpServlet {
 			User loggedInUser = userManager.loginUser(userToLogin);
 
 			HttpSession newSession = request.getSession(true);
-			newSession.setAttribute(email, loggedInUser.getEmail());
+			newSession.setAttribute("email", loggedInUser.getEmail());
 
 			response.sendRedirect("/shopping-catalog/catalog.html");
 		} catch (Exception e) {
