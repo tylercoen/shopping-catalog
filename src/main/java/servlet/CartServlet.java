@@ -99,7 +99,7 @@ public class CartServlet extends HttpServlet {
 			return;
 		}
 		// retrieve parameters
-		String imgAddress = request.getParameter("imgAddresss");
+		String imgAddress = request.getParameter("imgAddress");
 		String itemName = request.getParameter("itemName");
 		String itemPriceStr = request.getParameter("itemPrice");
 

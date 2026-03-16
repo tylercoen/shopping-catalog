@@ -23,8 +23,7 @@ public class CartSummaryHtmlGenerator {
 			sb.append("<div class=\"cart-item-summary\">");
 
 			// include picture, name, and total price
-			sb.append(String.format("<img class=\"summary-image\" src=\"/shopping-catalog/%s\">",
-					currentItem.getImgAddress()));
+			sb.append(String.format("<img class=\"summary-image\" src=\"%s\">", currentItem.getImgAddress()));
 			sb.append(String.format("<h3>Name: %s Quantity: %d Total Price: %.2f</h3>", currentItem.getName(), quantity,
 					quantity * currentItem.getPrice()));
 
